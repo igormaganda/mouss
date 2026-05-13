@@ -89,6 +89,8 @@
   --a11y-text-size: 100%;
   --a11y-reading-line-opacity: 0;
   --a11y-reading-mask-opacity: 0;
+  --mask-x: 50%;
+  --mask-y: 50%;
 }
 
 .dark {
@@ -147,11 +149,29 @@
   border-color: #000 !important;
 }
 
-.a11y-dyslexic-font {
+.a11y-high-contrast img {
+  filter: contrast(1.2);
+}
+
+.a11y-high-contrast button,
+.a11y-high-contrast a {
+  text-decoration: underline;
+}
+
+.a11y-high-contrast [class*="bg-gray-"] {
+  background-color: #000 !important;
+}
+
+.a11y-high-contrast [class*="text-gray-"] {
+  color: #fff !important;
+}
+
+.a11y-dyslexic-font,
+.a11y-dyslexic-font * {
   font-family: 'OpenDyslexic', 'Comic Sans MS', cursive, sans-serif !important;
-  letter-spacing: 0.05em;
-  word-spacing: 0.1em;
-  line-height: 1.8;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.1em !important;
+  line-height: 1.8 !important;
 }
 
 .a11y-pause-animations *,
@@ -160,6 +180,7 @@
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 /* Reading line overlay */
@@ -188,10 +209,10 @@
   opacity: var(--a11y-reading-mask-opacity);
   transition: opacity 0.2s;
   background: radial-gradient(
-    ellipse 80% 40% at 50% 50%,
+    circle 120px at var(--mask-x, 50%) var(--mask-y, 50%),
     transparent 0%,
-    transparent 60%,
-    rgba(0, 0, 0, 0.7) 100%
+    transparent 80px,
+    rgba(0, 0, 0, 0.4) 120px
   );
 }
 
@@ -222,4 +243,37 @@
 
 .swipe-card:active {
   cursor: grabbing;
+}
+
+/* Print styles for Echo Entreprise report */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .echo-entreprise-report,
+  .echo-entreprise-report * {
+    visibility: visible;
+  }
+  .echo-entreprise-report {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white !important;
+    color: #111 !important;
+  }
+  .echo-entreprise-report .dark\:bg-gray-900,
+  .echo-entreprise-report .dark\:bg-gray-800,
+  .echo-entreprise-report .dark\:bg-emerald-900\/20,
+  .echo-entreprise-report .dark\:bg-violet-900\/20,
+  .echo-entreprise-report .dark\:bg-amber-900\/20 {
+    background: #f9fafb !important;
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+  @page {
+    margin: 1.5cm;
+    size: A4;
+  }
 }

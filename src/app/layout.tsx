@@ -14,11 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CréaPulse — Diagnostiquez votre projet entrepreneurial avec l'IA",
+  title: "Echo Entreprise — Diagnostiquez votre projet entrepreneurial avec l'IA",
   description:
-    "CréaPulse est une plateforme SaaS innovante qui combine intelligence artificielle et accompagnement humain pour diagnostiquer et guider les projets entrepreneuriaux. Accessible, gamifiée et modulaire.",
+    "Echo Entreprise est une plateforme SaaS innovante qui combine intelligence artificielle et accompagnement humain pour diagnostiquer et guider les projets entrepreneuriaux. Accessible, gamifiée et modulaire.",
   keywords: [
-    "CréaPulse",
+    "Echo Entreprise",
     "entrepreneuriat",
     "diagnostic",
     "IA",
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
     "accompagnement",
     "startup",
   ],
-  authors: [{ name: "CréaPulse" }],
+  authors: [{ name: "Echo Entreprise" }],
   openGraph: {
-    title: "CréaPulse — Diagnostic Entrepreneurial IA",
+    title: "Echo Entreprise — Diagnostic Entrepreneurial IA",
     description:
       "Diagnostiquez votre projet entrepreneurial avec l'IA. Gamification, accessibilité et accompagnement personnalisé.",
     type: "website",

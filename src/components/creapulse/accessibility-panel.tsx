@@ -62,11 +62,18 @@ export default function AccessibilityPanel() {
 
   // Reading mask
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      '--a11y-reading-mask-opacity',
-      accessibility.readingMask ? '1' : '0'
-    )
-    return () => {
+    if (accessibility.readingMask) {
+      const handleMouseMove = (e: MouseEvent) => {
+        document.documentElement.style.setProperty('--mask-x', `${e.clientX}px`)
+        document.documentElement.style.setProperty('--mask-y', `${e.clientY}px`)
+      }
+      document.documentElement.style.setProperty('--a11y-reading-mask-opacity', '1')
+      window.addEventListener('mousemove', handleMouseMove)
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove)
+        document.documentElement.style.setProperty('--a11y-reading-mask-opacity', '0')
+      }
+    } else {
       document.documentElement.style.setProperty('--a11y-reading-mask-opacity', '0')
     }
   }, [accessibility.readingMask])

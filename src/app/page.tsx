@@ -8,6 +8,7 @@ import LandingPage from '@/components/creapulse/landing'
 import AuthPage from '@/components/creapulse/auth'
 import Sidebar from '@/components/creapulse/sidebar'
 import Header from '@/components/creapulse/header'
+import Footer from '@/components/creapulse/footer'
 import UserDashboard from '@/components/creapulse/user-dashboard'
 import CounselorDashboard from '@/components/creapulse/counselor-dashboard'
 import AdminDashboard from '@/components/creapulse/admin-dashboard'
@@ -25,11 +26,11 @@ function DashboardView() {
 
   return (
     <div
-      className="min-h-screen bg-[#f8fafc] transition-[margin-left] duration-200"
+      className="min-h-screen bg-[#f8fafc] transition-[margin-left] duration-200 flex flex-col"
       style={{ marginLeft }}
     >
       <Header />
-      <main className="p-4 sm:p-6 lg:p-8 pb-24 sm:pb-8">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8 pb-24 sm:pb-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentRole}
@@ -44,6 +45,7 @@ function DashboardView() {
           </motion.div>
         </AnimatePresence>
       </main>
+      <Footer />
       <AccessibilityPanel />
     </div>
   )

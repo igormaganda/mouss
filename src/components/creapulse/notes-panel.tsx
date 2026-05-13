@@ -166,7 +166,7 @@ export default function NotesPanel() {
               content: `Analyse et synthétise ces notes d'entretien entrepreneurial en un paragraphe structuré en français. Identifie les points clés, les forces, les freins et les recommandations :\n\n${noteContents}`,
             },
           ],
-          context: { userName: 'Conseiller CréaPulse', userRole: 'COUNSELOR' },
+          context: { userName: 'Conseiller Echo Entreprise', userRole: 'COUNSELOR' },
         }),
       })
       const data = await res.json()

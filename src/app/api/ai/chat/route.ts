@@ -3,7 +3,7 @@ import { authenticateRequest } from '@/lib/auth-middleware'
 import { rateLimit } from '@/lib/rate-limit'
 import { callAI } from '@/lib/ai'
 
-const SYSTEM_PROMPT = `Tu es l'IA Co-Pilote de CréaPulse, un assistant intelligent intégré à une plateforme de diagnostic entrepreneurial. Tu aides les conseillers et les porteurs de projet dans leur parcours de création d'entreprise.
+const SYSTEM_PROMPT = `Tu es l'IA Co-Pilote d'Echo Entreprise, un assistant intelligent intégré à une plateforme de diagnostic entrepreneurial. Tu aides les conseillers et les porteurs de projet dans leur parcours de création d'entreprise.
 
 Tu dois :
 - Analyser les profils entrepreneuriaux (RIASEC, compétences, Kiviat)

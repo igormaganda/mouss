@@ -18,6 +18,7 @@ import {
   BarChart3,
   Play,
 } from 'lucide-react'
+import Image from 'next/image'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -87,7 +88,7 @@ const fallbackTestimonials = [
   {
     name: 'Sophie Martin',
     role: 'Créatrice de GreenTech Solutions',
-    text: "CréaPulse m'a permis d'identifier les forces et les faiblesses de mon projet en seulement 2 heures. L'IA m'a surpris par la pertinence de ses conseils !",
+    text: "Echo Entreprise m'a permis d'identifier les forces et les faiblesses de mon projet en seulement 2 heures. L'IA m'a surpris par la pertinence de ses conseils !",
     rating: 5,
   },
   {
@@ -177,13 +178,17 @@ export default function LandingPage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
-                <Zap className="w-4 h-4 text-white" />
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
+                  <Zap className="w-4 h-4 text-white" />
+                </div>
+                <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                  Echo Entreprise
+                </span>
+                <div className="w-px h-5 bg-gray-200 hidden sm:block" />
+                <Image src="/logo-gidef.svg" alt="Gidef" width={80} height={28} className="h-6 w-auto hidden sm:block" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                CréaPulse
-              </span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-sm text-gray-600 hover:text-emerald-600 transition-colors">
@@ -250,7 +255,7 @@ export default function LandingPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed"
             >
-              CréaPulse combine intelligence artificielle et accompagnement humain pour
+              Echo Entreprise combine intelligence artificielle et accompagnement humain pour
               vous guider à chaque étape de votre parcours de création d&apos;entreprise.
             </motion.p>
 
@@ -449,7 +454,7 @@ export default function LandingPage() {
               custom={1}
               className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4"
             >
-              Ils ont confiance en CréaPulse
+              Ils ont confiance en Echo Entreprise
             </motion.h2>
           </motion.div>
 
@@ -530,7 +535,7 @@ export default function LandingPage() {
                 <Zap className="w-4 h-4 text-white" />
               </div>
               <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                CréaPulse
+                Echo Entreprise
               </span>
             </div>
             <div className="flex items-center gap-6 text-sm text-gray-500">
@@ -540,7 +545,7 @@ export default function LandingPage() {
               <span>Contact</span>
             </div>
             <p className="text-sm text-gray-400">
-              © {new Date().getFullYear()} CréaPulse. Tous droits réservés.
+              © {new Date().getFullYear()} Echo Entreprise. Tous droits réservés.
             </p>
           </div>
         </div>

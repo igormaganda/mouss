@@ -100,3 +100,164 @@ Stage Summary:
 - Anthropic references fully removed from all 3 routes
 - All routes now use centralized `callAI()` → GLM 4.7 model
 - Fallback functions, rate limiting, auth, and error handling preserved unchanged
+
+---
+
+## Task 1: Rename CréaPulse → Echo Entreprise (user-facing text)
+
+**Date**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+**Status**: ✅ Completed
+
+### Summary
+Renamed all user-facing "CréaPulse" and "CréaScope" references to "Echo Entreprise" across 16 source files. Internal code references (folder names, import paths, variable names, email addresses, function names) were preserved as specified.
+
+### Files Modified
+
+| # | File | Changes |
+|---|------|---------|
+| 1 | `src/app/layout.tsx` | Title, description, keywords, authors, OpenGraph title |
+| 2 | `src/app/api/ai/chat/route.ts` | SYSTEM_PROMPT: "IA Co-Pilote de CréaPulse" → "d'Echo Entreprise" |
+| 3 | `src/app/api/auth/login/route.ts` | CORS origin: `creapulse.vercel.app` → `echo-entreprise.vercel.app` |
+| 4 | `src/app/api/auth/register/route.ts` | CORS origin: same change |
+| 5 | `src/components/creapulse/header.tsx` | Mobile sidebar brand name |
+| 6 | `src/components/creapulse/auth.tsx` | Welcome text, mobile brand, register CTA (kept emails as-is) |
+| 7 | `src/components/creapulse/landing.tsx` | 6 instances: testimonial, nav, hero, heading, footer brand, copyright |
+| 8 | `src/components/creapulse/counselor-dashboard.tsx` | AI greeting, context name, market analysis source label |
+| 9 | `src/components/creapulse/synthesis-panel.tsx` | 4 text labels + CSS class `creapulse-report` → `echo-entreprise-report` (6 CSS selectors) |
+| 10 | `src/components/creapulse/notes-panel.tsx` | AI context userName |
+| 11 | `src/components/creapulse/motivations-panel.tsx` | AI context userName |
+| 12 | `src/components/creapulse/juridique-panel.tsx` | AI context userName |
+| 13 | `src/components/creapulse/bp-bmc.tsx` | Export footer text |
+| 14 | `src/components/creapulse/bp-smart-roadmap.tsx` | Export header, footer, summary footer |
+| 15 | `src/components/creapulse/user-dashboard.tsx` | CardTitle + description text (CréaScope → Echo Entreprise), tab switch case |
+| 16 | `src/hooks/use-store.ts` | Tab type: `'rapport-creascope'` → `'rapport-diagnostic'` |
+
+### Preserved (not changed)
+- Folder names (`src/components/creapulse/`)
+- Import paths (`@/components/creapulse/...`)
+- Internal function/component names (`RapportCreascopeTab`)
+- Email addresses in seed data (`conseiller@creapulse.fr`, `admin@creapulse.fr`)
+- Code comments
+
+---
+Task ID: 2-3
+Agent: Main Agent
+Task: Add gatekeeper logic to Zustand store + create progress API route
+
+Work Log:
+
+**Task A — Gatekeeper Logic in Zustand Store (`src/hooks/use-store.ts`):**
+- Read existing store structure: simple `create<AppState>((set) => ({...}))` pattern
+- Added `completedModules` state: `Record<string, boolean>` with 6 modules (profil, parcours, bilan, riasec, pepites, motivation), all defaulting to `false`
+- Changed creator signature from `(set)` to `(set, get)` to enable reading current state in computed actions
+- Added 4 gatekeeper actions:
+  - `completeModule(moduleName)` — sets a specific module to `true` via immutable state update
+  - `getLockedTabs()` — returns array of locked tab names based on completion rules:
+    - If profil not complete: locks 14 tabs (all diagnostic tabs except profil itself)
+    - If profil or parcours not complete: additionally locks rapport-diagnostic
+  - `isTabAccessible(tab)` — returns boolean inverse of `getLockedTabs().includes(tab)`
+  - `getProgressPercent()` — returns 0-100 based on completed modules ratio
+- All additions follow existing store patterns (no breaking changes)
+
+**Task B — Progress API Route (`src/app/api/profil-createur/progress/route.ts`):**
+- Created new GET endpoint with `authenticateRequest` middleware
+- Reads Prisma schema to verify correct model field names and unique constraints
+- Fixed 2 issues from task pseudocode:
+  - `db.motivationAssessment.findUnique()` → `findFirst()` (no `@@unique` on userId)
+  - `db.skillGapAnalysis.findUnique({ where: { id: \`${userId}_latest\` } })` → `findFirst({ orderBy: { analyzedAt: 'desc' } })` (id is auto-generated cuid, not userId-based)
+- Parallel `Promise.all` fetches 8 data points (user, creatorSession, cvUpload, swipeResults, kiviatResults, riasecResults, motivationResult, skillGapAnalysis)
+- Returns JSON with: completedModules, totalModules, completedCount, progressPercent, badges (6 items), canGenerateReport, details
+- Badge system tracks earned status with optional earnedAt timestamp
+
+Stage Summary:
+- Files modified: 2 (`src/hooks/use-store.ts`, new `src/app/api/profil-createur/progress/route.ts`)
+- Store: 6 module tracking states + 4 computed actions added
+- API: Authenticated GET endpoint returning complete progress snapshot
+- Lint: 0 new errors (2 pre-existing issues in unrelated files)
+- No existing functionality broken
+
+---
+Task ID: 4
+Agent: Main Agent
+Task: Implement institutional footer and header branding for Echo Entreprise platform
+
+Work Log:
+
+**Task A — Created institutional footer component (`src/components/creapulse/footer.tsx`):**
+- Built a new `'use client'` footer component with institutional co-branding
+- Top row: République Française badge (RF icon + text), vertical divider, Gidef SVG logo (via next/image), vertical divider, Echo Entreprise gradient text
+- Top row right: accessibility email link with envelope icon (accessibilite@bge-bretagne.com)
+- Bottom row: copyright line with partner names (Gidef / BGE Bretagne / France Travail), WCAG 2.1 Level AA badge, "Diagnostic Expert" label
+- Applied `mt-auto` class for sticky footer behavior in flex layouts
+- Responsive: column layout on mobile, row layout on sm+ breakpoints
+
+**Task B — Integrated footer into dashboard layout (`src/app/page.tsx`):**
+- Added `import Footer from '@/components/creapulse/footer'`
+- Updated `DashboardView` wrapper div to use `flex flex-col` layout for proper footer positioning
+- Added `<Footer />` between `</main>` and `<AccessibilityPanel />`
+- Applied `flex-1` to `<main>` so it grows and pushes the footer to the bottom
+
+**Task C — Updated header branding (`src/components/creapulse/header.tsx`):**
+- Added `import Image from 'next/image'`
+- In the mobile Sheet sidebar header: added Gidef logo (80×28, h-6) next to Echo Entreprise text with a vertical divider
+- Structured as nested flex containers to keep proper alignment with close button
+
+**Task D — Updated landing page navbar (`src/components/creapulse/landing.tsx`):**
+- Added `import Image from 'next/image'`
+- In the fixed top navbar: added Gidef logo (80×28, h-6) alongside Echo Entreprise brand with vertical divider
+- Gidef logo hidden on mobile (`hidden sm:block`) to prevent navbar overflow on small screens
+- Wrapped brand elements in a parent flex container for proper spacing
+
+Stage Summary:
+- Files created: 1 (`src/components/creapulse/footer.tsx`)
+- Files modified: 3 (`src/app/page.tsx`, `src/components/creapulse/header.tsx`, `src/components/creapulse/landing.tsx`)
+- Institutional co-branding now visible across all views: landing navbar, dashboard header (mobile), dashboard footer
+- Footer sticks to viewport bottom when content is short (flex layout + mt-auto)
+- Pre-existing lint issues only (2 unrelated warnings/errors in other files)
+
+---
+Task ID: 5
+Agent: Main Agent
+Task: Add missing accessibility CSS rules to global stylesheet
+
+Work Log:
+
+Analyzed `src/app/globals.css` for 7 required accessibility CSS classes/rules. Found several existing but incomplete implementations, and added only the missing pieces.
+
+**1. `.a11y-high-contrast` — Added 4 missing sub-rules (lines 150-165):**
+- `.a11y-high-contrast img { filter: contrast(1.2); }` — extra contrast boost on images
+- `.a11y-high-contrast button, .a11y-high-contrast a { text-decoration: underline; }` — underline interactive elements for clarity
+- `.a11y-high-contrast [class*="bg-gray-"] { background-color: #000 !important; }` — force gray backgrounds to black
+- `.a11y-high-contrast [class*="text-gray-"] { color: #fff !important; }` — force gray text to white
+- Preserved existing: `filter: contrast(1.4)` on root, `border-color: #000` on `*`
+
+**2. `.a11y-dyslexic-font` — Enhanced selector scope (line 167-175):**
+- Changed selector from `.a11y-dyslexic-font` to `.a11y-dyslexic-font, .a11y-dyslexic-font *` (applies to all descendants)
+- Added `!important` to `letter-spacing`, `word-spacing`, and `line-height` (were missing, could be overridden)
+
+**3. `.a11y-pause-animations` — Added scroll-behavior rule (line 183):**
+- Added `scroll-behavior: auto !important;` to the `*, *::before, *::after` block
+
+**4. `--a11y-text-size` CSS variable — Already exists (line 89):**
+- Confirmed `--a11y-text-size: 100%;` was already declared in `:root`
+- Used via `.a11y-resize { font-size: var(--a11y-text-size) !important; }` class
+
+**5. `.reading-line-overlay` — Already exists (lines 186-198):**
+- Confirmed CSS was already present with emerald-themed colors and opacity control
+- No changes needed (functional with JS mouse tracking in accessibility-panel.tsx)
+
+**6. `.reading-mask-overlay` — Updated for cursor tracking (lines 200-217):**
+- Changed gradient from static `ellipse 80% 40% at 50% 50%` to dynamic `circle 120px at var(--mask-x, 50%) var(--mask-y, 50%)`
+- Added `--mask-x: 50%` and `--mask-y: 50%` CSS variables to `:root` (lines 92-93)
+- Updated `accessibility-panel.tsx` reading mask effect to track mouse position via `mousemove` event, setting `--mask-x` and `--mask-y` CSS custom properties
+- Preserved existing: `opacity`, `transition`, `z-index`, `pointer-events`
+
+**7. `.echo-entreprise-report` print styles — Added to globals.css (lines 248-279):**
+- Added `@media print` block with: visibility rules, absolute positioning, white background, dark-mode background overrides, `.print\:hidden` display:none, A4 page settings
+- Matches the inline `<style jsx global>` already in synthesis-panel.tsx
+
+Stage Summary:
+- Files modified: 2 (`src/app/globals.css`, `src/components/creapulse/accessibility-panel.tsx`)
+- All 7 accessibility CSS requirements verified/completed
+- 0 new lint errors (pre-existing issues in unrelated files only)
+- All existing styles preserved

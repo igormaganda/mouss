@@ -5,7 +5,7 @@ import { validateRegisterInput } from '@/lib/validation'
 
 const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
-  : ['http://localhost:3000', 'https://creapulse.vercel.app']
+  : ['http://localhost:3000', 'https://echo-entreprise.vercel.app']
 
 function getCorsHeaders(request: NextRequest) {
   const origin = request.headers.get('origin') || ''

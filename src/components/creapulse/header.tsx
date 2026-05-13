@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Search, Bell, Menu, X, Zap, LogOut } from 'lucide-react'
+import Image from 'next/image'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -118,7 +119,11 @@ export default function Header() {
                       <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
                         <Zap className="w-4 h-4 text-white" />
                       </div>
-                      <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">CréaPulse</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Echo Entreprise</span>
+                        <div className="w-px h-5 bg-gray-200" />
+                        <Image src="/logo-gidef.svg" alt="Gidef" width={80} height={28} className="h-6 w-auto" />
+                      </div>
                     </div>
                     <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)} className="h-8 w-8">
                       <X className="w-4 h-4" />

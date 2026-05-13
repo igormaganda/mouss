@@ -246,7 +246,7 @@ export default function BusinessModelCanvas() {
     }
 
     lines.push('═'.repeat(60))
-    lines.push(`  Généré par CréaPulse — ${new Date().toLocaleString('fr-FR')}`)
+    lines.push(`  Généré par Echo Entreprise — ${new Date().toLocaleString('fr-FR')}`)
     lines.push('═'.repeat(60))
 
     const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' })

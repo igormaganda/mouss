@@ -75,7 +75,7 @@ function buildRecommendations(d: ReportData): string[] {
   const incompletePhases = d.phases.filter((p) => !p.completed)
   if (incompletePhases.length > 0)
     recs.push(`Poursuivre la complétion de la phase « ${incompletePhases[0].name} »`)
-  recs.push('Rencontrer votre conseiller CréaPulse pour valider les résultats et construire votre feuille de route')
+  recs.push('Rencontrer votre conseiller Echo Entreprise pour valider les résultats et construire votre feuille de route')
   return recs
 }
 
@@ -183,7 +183,7 @@ export default function SynthesisPanel() {
 
         // === Counselor ===
         const counselorUserName = counselorData?.counselor?.user?.name
-        const conseillerName = counselorUserName || 'Conseiller CréaPulse'
+        const conseillerName = counselorUserName || 'Conseiller Echo Entreprise'
 
         const today = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 
@@ -204,7 +204,7 @@ export default function SynthesisPanel() {
         // On error, set minimal report data
         const today = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
         setReportData({
-          porteur: { nom: userName || 'Porteur de projet', date: today, conseiller: 'Conseiller CréaPulse' },
+          porteur: { nom: userName || 'Porteur de projet', date: today, conseiller: 'Conseiller Echo Entreprise' },
           modules: {
             riasec: { dominant: 'N/A', score: 0, description: 'Données non disponibles' },
             kiviat: { score: 0, details: 'Données non disponibles' },
@@ -255,7 +255,7 @@ Génère la synthèse structurée avec : 1) Profil entrepreneurial, 2) Forces et
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: [{ role: 'user', content: prompt }],
-          context: { userName: 'Conseiller CréaPulse', userRole: 'COUNSELOR' },
+          context: { userName: 'Conseiller Echo Entreprise', userRole: 'COUNSELOR' },
         }),
       })
       const data = await res.json()
@@ -450,7 +450,7 @@ Génère la synthèse structurée avec : 1) Profil entrepreneurial, 2) Forces et
       {/* Report Content (printable) */}
       <motion.div variants={fadeIn}>
         <Card className="border-0 shadow-sm print:shadow-none print:border print:border-gray-300 print:rounded-none">
-          <div ref={reportRef} className="creapulse-report">
+          <div ref={reportRef} className="echo-entreprise-report">
             {/* Report Header */}
             <div className="p-6 sm:p-8 print:p-8 border-b border-gray-100 dark:border-gray-800 print:border-gray-300">
               <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
@@ -459,7 +459,7 @@ Génère la synthèse structurée avec : 1) Profil entrepreneurial, 2) Forces et
                     Rapport de Diagnostic Entrepreneurial
                   </h2>
                   <p className="text-sm text-gray-500 dark:text-gray-400 print:text-gray-600 mt-1">
-                    Plateforme CréaPulse — Diagnostic complet
+                    Plateforme Echo Entreprise — Diagnostic complet
                   </p>
                 </div>
                 <div className="text-right">
@@ -675,7 +675,7 @@ Génère la synthèse structurée avec : 1) Profil entrepreneurial, 2) Forces et
               {/* Report Footer */}
               <div className="pt-4 border-t border-gray-100 dark:border-gray-800 print:border-gray-300">
                 <div className="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500 print:text-gray-500">
-                  <span>Rapport généré par CréaPulse</span>
+                  <span>Rapport généré par Echo Entreprise</span>
                   <span>{reportData.porteur.date}</span>
                 </div>
               </div>
@@ -690,11 +690,11 @@ Génère la synthèse structurée avec : 1) Profil entrepreneurial, 2) Forces et
           body * {
             visibility: hidden;
           }
-          .creapulse-report,
-          .creapulse-report * {
+          .echo-entreprise-report,
+          .echo-entreprise-report * {
             visibility: visible;
           }
-          .creapulse-report {
+          .echo-entreprise-report {
             position: absolute;
             left: 0;
             top: 0;
@@ -702,11 +702,11 @@ Génère la synthèse structurée avec : 1) Profil entrepreneurial, 2) Forces et
             background: white !important;
             color: #111 !important;
           }
-          .creapulse-report .dark\\:bg-gray-900,
-          .creapulse-report .dark\\:bg-gray-800,
-          .creapulse-report .dark\:bg-emerald-900\\/20,
-          .creapulse-report .dark\:bg-violet-900\\/20,
-          .creapulse-report .dark\:bg-amber-900\\/20 {
+          .echo-entreprise-report .dark\\:bg-gray-900,
+          .echo-entreprise-report .dark\\:bg-gray-800,
+          .echo-entreprise-report .dark\:bg-emerald-900\\/20,
+          .echo-entreprise-report .dark\:bg-violet-900\\/20,
+          .echo-entreprise-report .dark\:bg-amber-900\\/20 {
             background: #f9fafb !important;
           }
           .print\\:hidden {
