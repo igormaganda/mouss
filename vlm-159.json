@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The image shows the logo of \"Les Compagnons du Devoir et du Tour de France\" (a French organization), not an Aquabion water treatment product. The image displays the logo of \"Les Compagnons du Devoir et du Tour de France,\" a French organization, not an Aquabion water treatment product.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777743959,
+  "id": "20260503014558362e1e1331aa4afb",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260503014558362e1e1331aa4afb",
+  "usage": {
+    "completion_tokens": 71,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 185,
+    "prompt_tokens_details": {
+      "cached_tokens": 6
+    },
+    "total_tokens": 256
+  }
+}

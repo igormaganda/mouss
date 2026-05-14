@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Yes, this is an Aquabion water treatment product: a brass-colored cylindrical device with threaded ends, labeled \"AQUABION\" for water treatment, featuring certification and product details on its label.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777743961,
+  "id": "20260503014600f467fc2477bf4133",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260503014600f467fc2477bf4133",
+  "usage": {
+    "completion_tokens": 44,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 161,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 205
+  }
+}

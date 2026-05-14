@@ -1,0 +1,7 @@
+{
+  "name": "nextjs-app-server",
+  "private": true,
+  "scripts": {
+    "dev": "cd /home/z/my-project && DATABASE_URL='postgresql://admin_100jours:J0urs%212026%2ACent@109.123.249.114:5432/100jours?sslmode=prefer' next dev --hostname 0.0.0.0 -p 3000"
+  }
+}

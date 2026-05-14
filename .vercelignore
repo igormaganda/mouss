@@ -1,0 +1,55 @@
+# Archive files
+*.tar
+*.zip
+*.gz
+
+# Dependencies
+node_modules
+.next
+turbo
+
+# Git
+.git
+.gitignore
+
+# Large data/temp folders
+download
+upload
+temp-*
+deploy-temp*
+extracted
+workspace-*.tar
+*.pid
+*.log
+creapulse-deploy
+
+# Databases
+db/*.db
+db/*.db-journal
+prisma/*.db
+prisma/*.db-journal
+
+# Env files
+.env
+.env.*
+!.env.production
+
+# Project-specific excludes
+skills
+agent-ctx
+.zscripts
+mini-services
+examples
+scripts
+
+# Large assets (will be served separately)
+public/images
+public/*.zip
+public/*.tar
+
+# Documentation markdown
+*.md
+!README.md
+
+# Other
+Caddyfile

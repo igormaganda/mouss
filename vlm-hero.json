@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The image shows a **stainless steel water treatment device** (likely a filter or treatment unit) mounted on a copper pipe. It features a cylindrical upper chamber with the brand name **PROKURA** printed in blue, and a mechanical lower section with fittings for pipe connections.  \n\n- **Is it a water treatment product?** Yes, its design (pipe-mounted, stainless steel construction, and industrial appearance) indicates it is a water treatment device (e.g., a filter, softener, or treatment unit).  \n- **Brand?** The brand is **PROKURA** (visible on the device).  \n- **Model?** The image does not display a specific model number, so the model cannot be identified from the provided visual.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1777743805,
+  "id": "20260503014320811940c129b64c94",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260503014320811940c129b64c94",
+  "usage": {
+    "completion_tokens": 152,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1400,
+    "prompt_tokens_details": {
+      "cached_tokens": 5
+    },
+    "total_tokens": 1552
+  }
+}

@@ -1,0 +1,51 @@
+Type;Notification_Text;Icone
+Achat;"Thomas de Lyon (69) vient de prendre le Pack Lancement.";pack
+Achat;"Un nouveau membre en Île-de-France a rejoint le Pack Expert.";pack
+Telechargement;"Sarah a téléchargé le Guide des aides à la création.";doc
+Activite;"14 entrepreneurs consultent actuellement le comparatif banques.";eye
+Achat;"Nicolas de Bordeaux vient d'activer son Pack Accompagnement.";pack
+Telechargement;"Un freelance en Bretagne a récupéré le Modèle de contrat.";doc
+Achat;"Julie de Nice (06) a commandé le Pack Business Plan.";pack
+Activite;"Un membre vient de poser une question sur le forum juridique.";chat
+Urgence;"Plus que 3 accès prioritaires pour le coaching de groupe.";fire
+Telechargement;"Maxime a téléchargé la Checklist SEO pour entrepreneurs.";doc
+Achat;"Un entrepreneur en Grand Est vient de prendre le Pack Lancement.";pack
+Achat;"Antoine de Toulouse vient de rejoindre le Pack Expert.";pack
+Activite;"27 personnes regardent les solutions de gestion de trésorerie.";eye
+Telechargement;"Élodie (75) a téléchargé le Kit Statuts Juridiques.";doc
+Achat;"Un nouveau membre à Nantes vient d'activer le Pack Accompagnement.";pack
+Telechargement;"Mathieu de Lille a récupéré le guide Micro-entreprise.";doc
+Achat;"Clara en région PACA a commandé le Pack Business Plan.";pack
+Activite;"Un freelance vient de demander un devis pour une RC Pro.";check
+Achat;"Kevin de Montpellier vient de prendre le Pack Lancement.";pack
+Telechargement;"Léa (33) a téléchargé le tableur de gestion de frais.";doc
+Achat;"Un membre à Strasbourg a rejoint le Pack Expert.";pack
+Activite;"8 entrepreneurs en Île-de-France lisent l'article Compta.";eye
+Telechargement;"Camille de Rennes a téléchargé le Guide Prospection.";doc
+Achat;"Alexandre de Dijon vient d'activer son Pack Accompagnement.";pack
+Urgence;"Dernière chance : -20% sur le Pack Lancement (1h restante).";fire
+Achat;"Un entrepreneur (92) vient de prendre le Pack Expert.";pack
+Telechargement;"Manon a récupéré la liste des 50 plateformes de freelance.";doc
+Activite;"Un nouveau membre vient de s'inscrire à la Newsletter Pro.";mail
+Achat;"Hugo de Grenoble vient de commander le Pack Business Plan.";pack
+Telechargement;"Un freelance a téléchargé le Guide TVA Intracommunautaire.";doc
+Achat;"Romain en Nouvelle-Aquitaine a rejoint le Pack Expert.";pack
+Activite;"19 personnes comparent les logiciels de facturation.";eye
+Achat;"Marine de Toulon vient de prendre le Pack Lancement.";pack
+Telechargement;"Clément (44) a téléchargé le guide 'Trouver ses clients'.";doc
+Achat;"Un nouveau membre à Reims vient d'activer le Pack Accompagnement.";pack
+Activite;"Un membre pose une question sur l'optimisation fiscale.";chat
+Achat;"Florian de Saint-Étienne a commandé le Pack Business Plan.";pack
+Telechargement;"Pauline a récupéré le pack de modèles d'e-mails de vente.";doc
+Achat;"Un entrepreneur à Angers a rejoint le Pack Lancement.";pack
+Urgence;"Plus que 2 places pour l'accompagnement individuel.";fire
+Achat;"Quentin de Clermont-Ferrand vient de prendre le Pack Expert.";pack
+Telechargement;"Laura (67) a téléchargé le guide du statut SASU.";doc
+Achat;"Un membre en Normandie vient d'activer le Pack Accompagnement.";pack
+Activite;"32 entrepreneurs consultent le guide de la protection sociale.";eye
+Achat;"Lucas de Brest vient de commander le Pack Lancement.";pack
+Telechargement;"Anaïs a téléchargé le simulateur de revenus net/brut.";doc
+Achat;"Enzo de Perpignan a rejoint le Pack Expert.";pack
+Activite;"Un freelance vient de valider son Business Plan en ligne.";check
+Achat;"Chloé (31) vient de prendre le Pack Accompagnement.";pack
+Achat;"Un entrepreneur à Orléans a commandé le Pack Business Plan.";pack

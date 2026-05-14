@@ -1,0 +1,25 @@
+import { Header } from "@/components/header";
+import { HeroSection } from "@/components/sections/hero-section";
+import { RoadmapSection } from "@/components/sections/roadmap-section";
+import { ProfileSection } from "@/components/sections/profile-section";
+import { PainPointsSection } from "@/components/sections/pain-points-section";
+import { ThematicSection } from "@/components/sections/thematic-section";
+import { AuditSection } from "@/components/sections/audit-section";
+import { Footer } from "@/components/footer";
+
+export default function Home() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <HeroSection />
+        <RoadmapSection />
+        <ProfileSection />
+        <PainPointsSection />
+        <ThematicSection />
+        <AuditSection />
+      </main>
+      <Footer />
+    </div>
+  );
+}

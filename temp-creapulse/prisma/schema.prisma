@@ -1,0 +1,377 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String                @id @default(cuid())
+  email                 String                @unique
+  passwordHash          String                @map("password_hash")
+  name                  String?
+  firstName             String?               @map("first_name")
+  lastName              String?               @map("last_name")
+  phone                 String?
+  avatarUrl             String?               @map("avatar_url")
+  role                  UserRole              @default(USER)
+  isActive              Boolean               @default(true) @map("is_active")
+  lastLoginAt           DateTime?             @map("last_login_at")
+  createdAt             DateTime              @default(now()) @map("created_at")
+  updatedAt             DateTime              @updatedAt @map("updated_at")
+  accessibilitySettings AccessibilitySetting?
+  aiConversations       AiConversation[]
+  counselorAssigned     CounselorAssignment[] @relation("CounselorToUser")
+  counselorProfile      Counselor?
+  diagnosisSessions     DiagnosisSession[]
+  disabilityRequests    DisabilityRequest[]
+  keywordSelections     KeywordSelection[]
+  kiviatResults         KiviatResult[]
+  livrables             Livrable[]
+  notifications         Notification[]
+  riasecResults         RiasecResult[]
+  skillGapAnalyses      SkillGapAnalysis[]
+  swipeGameResults      SwipeGameResult[]
+
+  @@map("users")
+}
+
+model Counselor {
+  id              String                @id @default(cuid())
+  userId          String                @unique @map("user_id")
+  territory       String?
+  organization    String?
+  maxAssignments  Int                   @default(20) @map("max_assignments")
+  isAvailable     Boolean               @default(true) @map("is_available")
+  createdAt       DateTime              @default(now()) @map("created_at")
+  updatedAt       DateTime              @updatedAt @map("updated_at")
+  aiConversations AiConversation[]
+  assignedUsers   CounselorAssignment[] @relation("Assignments")
+  user            User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  livrables       Livrable[]
+
+  @@map("counselors")
+}
+
+model CounselorAssignment {
+  id           String           @id @default(cuid())
+  counselorId  String           @map("counselor_id")
+  userId       String           @map("user_id")
+  status       AssignmentStatus @default(ACTIVE)
+  assignedAt   DateTime         @default(now()) @map("assigned_at")
+  unassignedAt DateTime?        @map("unassigned_at")
+  counselor    Counselor        @relation("Assignments", fields: [counselorId], references: [id], onDelete: Cascade)
+  user         User             @relation("CounselorToUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([counselorId, userId])
+  @@map("counselor_assignments")
+}
+
+model DiagnosisSession {
+  id              String          @id @default(cuid())
+  userId          String          @map("user_id")
+  type            SessionType
+  status          SessionStatus   @default(IN_PROGRESS)
+  goNoGoDecision  GoNoGoDecision? @map("go_no_go_decision")
+  goNoGoReason    String?         @map("go_no_go_reason")
+  score           Int?
+  startedAt       DateTime        @default(now()) @map("started_at")
+  completedAt     DateTime?       @map("completed_at")
+  durationMinutes Int?            @map("duration_minutes")
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  moduleResults   ModuleResult[]
+
+  @@map("diagnosis_sessions")
+}
+
+model ModuleResult {
+  id          String           @id @default(cuid())
+  sessionId   String           @map("session_id")
+  moduleType  String           @map("module_type")
+  score       Int?
+  data        Json             @default("{}")
+  completedAt DateTime         @default(now()) @map("completed_at")
+  session     DiagnosisSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@map("module_results")
+}
+
+model SwipeGameResult {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  skillId   String   @map("skill_id")
+  skillName String   @map("skill_name")
+  kept      Boolean  @default(false)
+  swipedAt  DateTime @default(now()) @map("swiped_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, skillId])
+  @@map("swipe_game_results")
+}
+
+model KiviatResult {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  dimension String
+  value     Int
+  maxValue  Int      @default(100) @map("max_value")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("kiviat_results")
+}
+
+model RiasecResult {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  profileType String   @map("profile_type")
+  score       Int
+  isDominant  Boolean  @default(false) @map("is_dominant")
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, profileType])
+  @@map("riasec_results")
+}
+
+model KeywordSelection {
+  id       String  @id @default(cuid())
+  userId   String  @map("user_id")
+  keyword  String
+  selected Boolean @default(false)
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, keyword])
+  @@map("keyword_selections")
+}
+
+model SkillGapAnalysis {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  cvFileName      String?  @map("cv_file_name")
+  cvFileUrl       String?  @map("cv_file_url")
+  acquiredSkills  Json     @default("[]") @map("acquired_skills")
+  gapSkills       Json     @default("[]") @map("gap_skills")
+  recommendedPlan Json     @default("{}") @map("recommended_plan")
+  analyzedAt      DateTime @default(now()) @map("analyzed_at")
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("skill_gap_analyses")
+}
+
+model AiConversation {
+  id          String             @id @default(cuid())
+  counselorId String             @map("counselor_id")
+  userId      String?            @map("user_id")
+  title       String?
+  summary     String?
+  status      ConversationStatus @default(ACTIVE)
+  createdAt   DateTime           @default(now()) @map("created_at")
+  updatedAt   DateTime           @updatedAt @map("updated_at")
+  counselor   Counselor          @relation(fields: [counselorId], references: [id], onDelete: Cascade)
+  user        User?              @relation(fields: [userId], references: [id])
+  messages    AiMessage[]
+
+  @@map("ai_conversations")
+}
+
+model AiMessage {
+  id             String          @id @default(cuid())
+  conversationId String          @map("conversation_id")
+  role           MessageRole
+  content        String
+  messageType    MessageType     @default(TEXT) @map("message_type")
+  suggestionType SuggestionType? @map("suggestion_type")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  conversation   AiConversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@map("ai_messages")
+}
+
+model Livrable {
+  id          String         @id @default(cuid())
+  counselorId String         @map("counselor_id")
+  userId      String?        @map("user_id")
+  type        LivrableType
+  title       String
+  content     Json           @default("{}")
+  fileUrl     String?        @map("file_url")
+  fileName    String?        @map("file_name")
+  fileSize    Int?           @map("file_size")
+  status      LivrableStatus @default(DRAFT)
+  generatedAt DateTime       @default(now()) @map("generated_at")
+  updatedAt   DateTime       @updatedAt @map("updated_at")
+  counselor   Counselor      @relation(fields: [counselorId], references: [id], onDelete: Cascade)
+  user        User?          @relation(fields: [userId], references: [id])
+
+  @@map("livrables")
+}
+
+model AccessibilitySetting {
+  id              String  @id @default(cuid())
+  userId          String  @unique @map("user_id")
+  textSize        Int     @default(100) @map("text_size")
+  highContrast    Boolean @default(false) @map("high_contrast")
+  readingLine     Boolean @default(false) @map("reading_line")
+  readingMask     Boolean @default(false) @map("reading_mask")
+  dyslexicFont    Boolean @default(false) @map("dyslexic_font")
+  pauseAnimations Boolean @default(false) @map("pause_animations")
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("accessibility_settings")
+}
+
+model ModuleConfig {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  enabled     Boolean  @default(true)
+  sortOrder   Int      @default(0) @map("sort_order")
+  config      Json     @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("module_configs")
+}
+
+model Territory {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  region       String
+  diagnostics  Int      @default(0)
+  pursuitRate  Int      @default(0) @map("pursuit_rate")
+  returnRate   Int      @default(0) @map("return_rate")
+  satisfaction Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("territories")
+}
+
+model DisabilityRequest {
+  id          String           @id @default(cuid())
+  userId      String           @map("user_id")
+  region      String
+  requestType String           @map("request_type")
+  description String
+  status      DisabilityStatus @default(PENDING)
+  priority    Priority         @default(MEDIUM)
+  adminNotes  String?          @map("admin_notes")
+  resolvedAt  DateTime?        @map("resolved_at")
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("disability_requests")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  title     String
+  content   String
+  type      String   @default("info")
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?  @map("user_id")
+  action    String
+  details   Json     @default("{}")
+  ipAddress String?  @map("ip_address")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("activity_logs")
+}
+
+enum UserRole {
+  USER
+  COUNSELOR
+  ADMIN
+}
+
+enum AssignmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum SessionType {
+  BILAN_DECOUVERTE
+  RIASEC
+  COMPETENCES
+  MARCHE
+  FINANCIER
+  FULL_DIAGNOSTIC
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+enum GoNoGoDecision {
+  GO
+  NO_GO
+  PENDING_REVIEW
+}
+
+enum ConversationStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum MessageRole {
+  AI
+  USER
+  SYSTEM
+}
+
+enum MessageType {
+  TEXT
+  SUGGESTION
+  ALERT
+  RECOMMENDATION
+}
+
+enum SuggestionType {
+  POSITIVE
+  ALERT
+  NEUTRAL
+}
+
+enum LivrableType {
+  ACTION_PLAN
+  FINANCIAL_FORECAST
+  DIAGNOSIS_REPORT
+  CAREER_MAP
+  CERTIFICATE
+}
+
+enum LivrableStatus {
+  DRAFT
+  GENERATING
+  COMPLETED
+  FAILED
+}
+
+enum DisabilityStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  REJECTED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
