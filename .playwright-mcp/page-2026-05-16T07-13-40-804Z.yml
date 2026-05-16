@@ -1,0 +1,38 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e178]:
+    - button "Retour à l'accueil" [ref=e179]:
+      - img [ref=e180]
+      - text: Retour à l'accueil
+    - generic [ref=e182]:
+      - img [ref=e184]
+      - generic [ref=e186]: Echo Entreprise
+    - heading "Connexion" [level=1] [ref=e187]
+    - paragraph [ref=e188]: Connectez-vous pour accéder à votre espace
+    - generic [ref=e219]: Identifiants invalides
+    - generic [ref=e189]:
+      - generic [ref=e190]:
+        - generic [ref=e191]: Adresse e-mail
+        - generic [ref=e192]:
+          - img [ref=e193]
+          - textbox "Adresse e-mail" [ref=e196]:
+            - /placeholder: marie@example.com
+            - text: porteur1@test.com
+      - generic [ref=e197]:
+        - generic [ref=e198]:
+          - generic [ref=e199]: Mot de passe
+          - button "Mot de passe oublié ?" [ref=e200]
+        - generic [ref=e201]:
+          - img [ref=e202]
+          - textbox "Mot de passe" [ref=e205]:
+            - /placeholder: ••••••••
+            - text: password123
+          - button [ref=e206]:
+            - img [ref=e207]
+      - button "Se connecter" [ref=e210]
+    - generic [ref=e216]: Connexion via Google et Microsoft disponible prochainement
+    - paragraph [ref=e217]:
+      - text: Pas encore de compte ?
+      - button "Créer un compte" [ref=e218]
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e136]

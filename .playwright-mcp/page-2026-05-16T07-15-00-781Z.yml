@@ -1,0 +1,45 @@
+- generic [ref=e1]:
+  - generic [ref=e178]:
+    - button "Retour à l'accueil" [ref=e179]:
+      - img [ref=e180]
+      - text: Retour à l'accueil
+    - generic [ref=e182]:
+      - img [ref=e184]
+      - generic [ref=e186]: Echo Entreprise
+    - heading "Créer un compte" [level=1] [ref=e220]
+    - paragraph [ref=e188]: Rejoignez Echo Entreprise et lancez votre diagnostic
+    - generic [ref=e189]:
+      - generic [ref=e221]:
+        - generic [ref=e222]: Nom complet
+        - generic [ref=e223]:
+          - img [ref=e224]
+          - textbox "Nom complet" [ref=e227]:
+            - /placeholder: Marie Dupont
+            - text: Test User
+      - generic [ref=e190]:
+        - generic [ref=e191]: Adresse e-mail
+        - generic [ref=e192]:
+          - img [ref=e193]
+          - textbox "Adresse e-mail" [ref=e196]:
+            - /placeholder: marie@example.com
+            - text: testuser@example.com
+      - generic [ref=e197]:
+        - generic [ref=e199]: Mot de passe
+        - generic [ref=e201]:
+          - img [ref=e202]
+          - textbox "Mot de passe" [ref=e205]:
+            - /placeholder: ••••••••
+            - text: Password123!
+          - button [ref=e206]:
+            - img [ref=e207]
+      - generic [ref=e228]:
+        - checkbox "J'accepte les conditions générales et la politique de confidentialité" [checked] [active] [ref=e229]
+        - generic [ref=e230]: J'accepte les conditions générales et la politique de confidentialité
+      - button "Créer mon compte" [ref=e231]
+    - generic [ref=e216]: Connexion via Google et Microsoft disponible prochainement
+    - paragraph [ref=e217]:
+      - text: Déjà un compte ?
+      - button "Se connecter" [ref=e232]
+  - region "Notifications (F8)":
+    - list
+  - alert [ref=e136]
