@@ -25,6 +25,7 @@ const ForumDiscussionsTab = dynamic(() => import('./forum-discussions').then(m =
 const MentorDirectoryTab = dynamic(() => import('./mentor-directory').then(m => ({ default: () => m.default() })), { ssr: false })
 const NewsFeedTab = dynamic(() => import('./news-feed').then(m => ({ default: () => m.default() })), { ssr: false })
 const EvenementsTab = dynamic(() => import('@/components/evenements/mes-evenements').then(m => ({ default: () => m.MesEvenements })), { ssr: false })
+const RechercheEmploiTab = dynamic(() => import('@/components/emploi/recherche-emploi').then(m => ({ default: () => m.RechercheEmploi })), { ssr: false })
 const PersonalizedPathTab = dynamic(() => import('./personalized-path').then(m => ({ default: () => m.default() })), { ssr: false })
 const NotificationCenterTab = dynamic(() => import('./notification-center').then(m => ({ default: () => m.default() })), { ssr: false })
 const OutilsBPTab = dynamic(() => import('./bp-outils').then(m => ({ default: () => m.default() })), { ssr: false })
@@ -1647,6 +1648,12 @@ const INSIGHTS: Record<string, string[]> = {
     'Les forums et ateliers sont des opportunités pour rencontrer des conseillers.',
     'Rencontrez des organismes de formation et découvrez des métiers en alternance.',
   ],
+  'recherche-emploi': [
+    'Utilisez les filtres avancés pour cibler les offres correspondant à votre profil.',
+    'Les offres d\'alternance sont idéales pour financer votre création d\'entreprise.',
+    'Conseil : Configurez des alertes emploi pour ne rien manquer des opportunités.',
+    'Développez votre réseau en participant aux événements France Travail.',
+  ],
   parcours: [
     'Votre progression est visible dans la feuille de route interactive.',
     'Chaque étape validée débloque la suivante.',
@@ -1729,6 +1736,7 @@ export default function UserDashboard() {
       case 'mentorat': return <MentorDirectoryTab />
       case 'actualites': return <NewsFeedTab />
       case 'evenements': return <EvenementsTab />
+      case 'recherche-emploi': return <RechercheEmploiTab />
       case 'parcours': return <PersonalizedPathTab />
       case 'notifications': return <NotificationCenterTab />
       case 'outils': return <OutilsBPTab />

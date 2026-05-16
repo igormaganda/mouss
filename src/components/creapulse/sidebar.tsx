@@ -17,7 +17,7 @@ import {
   LayoutDashboard, Target, TrendingUp, Bot, MessageSquareText, FileOutput,
   BarChart3, Settings, MapPin, Accessibility, LogOut, Menu, ChevronLeft, ChevronRight,
   ClipboardList, FileText, Handshake, FileBarChart,
-  Building2, PenLine, MessageCircle, GraduationCap, Newspaper, Route,
+  Building2, PenLine, MessageCircle, GraduationCap, Newspaper, Route, Briefcase,
   ChevronDown, Users, Trophy, Bell, Sparkles, Calendar,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -88,6 +88,7 @@ const etapeNavItems: EtapeGroup[] = [
       { id: 'mentorat', label: 'Mentorat', icon: GraduationCap, tab: 'mentorat' },
       { id: 'actualites', label: 'Actualités', icon: Newspaper, tab: 'actualites' },
       { id: 'evenements', label: 'Mes Événements', icon: Calendar, tab: 'evenements' },
+      { id: 'recherche-emploi', label: 'Recherche Emploi', icon: Briefcase, tab: 'recherche-emploi' },
     ],
   },
   {

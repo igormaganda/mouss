@@ -24,6 +24,7 @@ export type UserTab =
   | 'mentorat'
   | 'actualites'
   | 'evenements'
+  | 'recherche-emploi'
   | 'parcours'
   | 'notifications'
   | 'bilan-coherence'
