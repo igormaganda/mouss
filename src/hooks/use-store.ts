@@ -23,6 +23,7 @@ export type UserTab =
   | 'forum'
   | 'mentorat'
   | 'actualites'
+  | 'evenements'
   | 'parcours'
   | 'notifications'
   | 'bilan-coherence'

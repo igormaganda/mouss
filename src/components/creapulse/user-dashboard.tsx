@@ -24,6 +24,7 @@ const RegistrationFormTab = dynamic(() => import('./registration-form').then(m =
 const ForumDiscussionsTab = dynamic(() => import('./forum-discussions').then(m => ({ default: () => m.default() })), { ssr: false })
 const MentorDirectoryTab = dynamic(() => import('./mentor-directory').then(m => ({ default: () => m.default() })), { ssr: false })
 const NewsFeedTab = dynamic(() => import('./news-feed').then(m => ({ default: () => m.default() })), { ssr: false })
+const EvenementsTab = dynamic(() => import('@/components/evenements/mes-evenements').then(m => ({ default: () => m.MesEvenements() })), { ssr: false })
 const PersonalizedPathTab = dynamic(() => import('./personalized-path').then(m => ({ default: () => m.default() })), { ssr: false })
 const NotificationCenterTab = dynamic(() => import('./notification-center').then(m => ({ default: () => m.default() })), { ssr: false })
 const OutilsBPTab = dynamic(() => import('./bp-outils').then(m => ({ default: () => m.default() })), { ssr: false })
@@ -1641,6 +1642,11 @@ const INSIGHTS: Record<string, string[]> = {
     'Restez informé des tendances et opportunités de votre secteur.',
     'La veille est un atout stratégique pour tout entrepreneur.',
   ],
+  evenements: [
+    'Participez aux événements France Travail pour développer votre réseau.',
+    'Les forums et ateliers sont des opportunités pour rencontrer des conseillers.',
+    'Rencontrez des organismes de formation et découvrez des métiers en alternance.',
+  ],
   parcours: [
     'Votre progression est visible dans la feuille de route interactive.',
     'Chaque étape validée débloque la suivante.',
@@ -1722,6 +1728,7 @@ export default function UserDashboard() {
       case 'forum': return <ForumDiscussionsTab />
       case 'mentorat': return <MentorDirectoryTab />
       case 'actualites': return <NewsFeedTab />
+      case 'evenements': return <EvenementsTab />
       case 'parcours': return <PersonalizedPathTab />
       case 'notifications': return <NotificationCenterTab />
       case 'outils': return <OutilsBPTab />
