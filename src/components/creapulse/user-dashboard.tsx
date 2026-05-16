@@ -24,7 +24,7 @@ const RegistrationFormTab = dynamic(() => import('./registration-form').then(m =
 const ForumDiscussionsTab = dynamic(() => import('./forum-discussions').then(m => ({ default: () => m.default() })), { ssr: false })
 const MentorDirectoryTab = dynamic(() => import('./mentor-directory').then(m => ({ default: () => m.default() })), { ssr: false })
 const NewsFeedTab = dynamic(() => import('./news-feed').then(m => ({ default: () => m.default() })), { ssr: false })
-const EvenementsTab = dynamic(() => import('@/components/evenements/mes-evenements').then(m => ({ default: () => m.MesEvenements() })), { ssr: false })
+const EvenementsTab = dynamic(() => import('@/components/evenements/mes-evenements').then(m => ({ default: () => m.MesEvenements })), { ssr: false })
 const PersonalizedPathTab = dynamic(() => import('./personalized-path').then(m => ({ default: () => m.default() })), { ssr: false })
 const NotificationCenterTab = dynamic(() => import('./notification-center').then(m => ({ default: () => m.default() })), { ssr: false })
 const OutilsBPTab = dynamic(() => import('./bp-outils').then(m => ({ default: () => m.default() })), { ssr: false })

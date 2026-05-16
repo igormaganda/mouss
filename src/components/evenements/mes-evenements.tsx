@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { Calendar, MapPin, Users, Building2, Search, Filter, ChevronDown, ChevronUp } from 'lucide-react'
+import { Calendar, MapPin, Users, Building2, Search, Filter, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
 
 interface Evenement {
   id: number
@@ -38,14 +38,12 @@ export function MesEvenements() {
   const [totalElements, setTotalElements] = useState(0)
   const [page, setPage] = useState(0)
   const [showFilters, setShowFilters] = useState(false)
-  const [selectedEvent, setSelectedEvent] = useState<Evenement | null>(null)
 
   // Filtres
   const [filters, setFilters] = useState({
     dateDebut: '',
     dateFin: '',
     codePostal: '',
-    objectifs: ['33', '34'], // Par défaut : Aides à l'emploi, Création d'entreprise
     typeEvenement: '',
     modalite: '',
   })
@@ -58,13 +56,13 @@ export function MesEvenements() {
       const requestBody: any = {
         page,
         size: 20,
-        objectifs: filters.objectifs.map(Number),
+        objectifs: [33, 34], // Aides à l'emploi, Création d'entreprise
       }
 
       if (filters.dateDebut) requestBody.dateDebut = filters.dateDebut
       if (filters.dateFin) requestBody.dateFin = filters.dateFin
       if (filters.codePostal) requestBody.codePostal = [filters.codePostal]
-      if (filters.typeEvenement) requestBody.typeEvenement = Number(filters.typeEvenement)
+      if (filters.typeEvenement) requestBody.typeEvenement = parseInt(filters.typeEvenement)
       if (filters.modalite) requestBody.modalite = filters.modalite
 
       const response = await fetch('/api/evenements', {
@@ -80,10 +78,18 @@ export function MesEvenements() {
       }
 
       const data: EvenementsResponse = await response.json()
-      setEvenements(data.content)
-      setTotalElements(data.totalElements)
+
+      // Vérifier que content est bien un tableau
+      if (Array.isArray(data.content)) {
+        setEvenements(data.content)
+      } else {
+        setEvenements([])
+      }
+
+      setTotalElements(data.totalElements || 0)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur inconnue')
+      setEvenements([])
     } finally {
       setLoading(false)
     }
@@ -103,7 +109,6 @@ export function MesEvenements() {
       dateDebut: '',
       dateFin: '',
       codePostal: '',
-      objectifs: ['33', '34'],
       typeEvenement: '',
       modalite: '',
     })
@@ -112,18 +117,26 @@ export function MesEvenements() {
   }
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('fr-FR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
+    try {
+      const date = new Date(dateString)
+      return date.toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    } catch {
+      return dateString
+    }
   }
 
   const formatTime = (timeString: string) => {
-    const [hours, minutes] = timeString.split(':')
-    return `${hours}:${minutes}`
+    try {
+      const [hours, minutes] = timeString.split(':')
+      return `${hours}:${minutes}`
+    } catch {
+      return timeString
+    }
   }
 
   return (
@@ -236,7 +249,7 @@ export function MesEvenements() {
 
       {loading && (
         <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+          <Loader2 className="h-12 w-12 animate-spin text-gray-500" />
         </div>
       )}
 
@@ -254,7 +267,7 @@ export function MesEvenements() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {evenements.map((evenement) => (
+        {Array.isArray(evenements) && evenements.map((evenement) => (
           <Card key={evenement.id} className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <div className="flex items-start justify-between">
@@ -290,21 +303,25 @@ export function MesEvenements() {
                 <span className="text-xs">{evenement.libelleOrganisateurPrincipal}</span>
               </div>
 
-              <div className="flex flex-wrap gap-1 mt-3">
-                {evenement.modalites.map((modalite, idx) => (
-                  <Badge key={idx} variant="outline" className="text-xs">
-                    {modalite}
-                  </Badge>
-                ))}
-              </div>
+              {evenement.modalites && evenement.modalites.length > 0 && (
+                <div className="flex flex-wrap gap-1 mt-3">
+                  {evenement.modalites.map((modalite, idx) => (
+                    <Badge key={idx} variant="outline" className="text-xs">
+                      {modalite}
+                    </Badge>
+                  ))}
+                </div>
+              )}
 
-              <div className="flex flex-wrap gap-1">
-                {evenement.objectifs.slice(0, 2).map((objectif, idx) => (
-                  <Badge key={idx} variant="secondary" className="text-xs">
-                    {objectif}
-                  </Badge>
-                ))}
-              </div>
+              {evenement.objectifs && evenement.objectifs.length > 0 && (
+                <div className="flex flex-wrap gap-1">
+                  {evenement.objectifs.slice(0, 2).map((objectif, idx) => (
+                    <Badge key={idx} variant="secondary" className="text-xs">
+                      {objectif}
+                    </Badge>
+                  ))}
+                </div>
+              )}
 
               <Button
                 className="w-full mt-4"
