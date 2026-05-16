@@ -10,16 +10,32 @@ export interface AuthenticatedRequest extends NextRequest {
 }
 
 export function authenticateRequest(request: NextRequest): { authenticated: boolean; payload?: { userId: string; email: string; role: string }; error?: NextResponse } {
-  const authHeader = request.headers.get('authorization')
+  let token = null
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  // Try Authorization header first
+  const authHeader = request.headers.get('authorization')
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.substring(7)
+  }
+
+  // Fallback to cookies
+  if (!token) {
+    token = request.cookies.get('cp_token')?.value
+  }
+
+  // Fallback to query parameters (for development/debugging)
+  if (!token) {
+    const url = new URL(request.url)
+    token = url.searchParams.get('token')
+  }
+
+  if (!token) {
     return {
       authenticated: false,
       error: NextResponse.json({ error: 'Token d\'authentification manquant' }, { status: 401 })
     }
   }
 
-  const token = authHeader.substring(7)
   const payload = verifyToken(token)
 
   if (!payload) {

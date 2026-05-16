@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+set timeout 30
+set password "oQw16cma9X0AL4JVjSz"
+spawn ssh -o StrictHostKeyChecking=accept-new root@109.123.249.114
+expect {
+    "password:" {
+        send "$password\r"
+        expect "#"
+        send "cd /var/www/html/ && tar -czf psg3-backup-\$(date +%Y%m%d-%H%M%S).tar.gz psg3/ && ls -lh psg3-backup-*.tar.gz | tail -1\r"
+        expect "#"
+        send "exit\r"
+    }
+    eof
+}

@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    image: node:18-alpine
+    working_dir: /app
+    container_name: crea-entreprise-app
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - DOMAIN=${DOMAIN}
+      - NODE_ENV=${NODE_ENV}
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: sh -c "npm install && npm run build && npm run start"
+    networks:
+      - crea-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: crea-entreprise-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    networks:
+      - crea-network
+
+networks:
+  crea-network:
+    driver: bridge
+
+volumes:
+  node_modules:
